@@ -8,7 +8,6 @@ from app.api.router import router
 from app.core.config import settings
 from app.core.logging import configure_logging
 
-
 configure_logging(settings.log_level)
 
 logger = structlog.get_logger(__name__)
