@@ -1,0 +1,85 @@
+services:
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+
+    container_name: assistant-api
+
+    command:
+      - uvicorn
+      - app.main:app
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+      - --reload
+
+    volumes:
+      - ./backend:/app
+
+    ports:
+      - "8000:8000"
+
+    environment:
+      DATABASE_URL: postgresql+asyncpg://assistant:assistant@postgres:5432/assistant
+      REDIS_URL: redis://redis:6379/0
+      ENVIRONMENT: development
+      DEBUG: "true"
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+      redis:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:17
+
+    container_name: assistant-postgres
+
+    environment:
+      POSTGRES_USER: assistant
+      POSTGRES_PASSWORD: assistant
+      POSTGRES_DB: assistant
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - assistant_postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U assistant -d assistant"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:8-alpine
+
+    container_name: assistant-redis
+
+    ports:
+      - "6379:6379"
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "redis-cli",
+          "ping"
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+
+volumes:
+  assistant_postgres_data:
