@@ -5,7 +5,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
 
-    container_name: assistant-api
+    container_name: orbitask-api
 
     command:
       - uvicorn
@@ -38,7 +38,7 @@ services:
   postgres:
     image: postgres:17
 
-    container_name: assistant-postgres
+    container_name: orbitask-postgres
 
     environment:
       POSTGRES_USER: assistant
@@ -64,7 +64,7 @@ services:
   redis:
     image: redis:8-alpine
 
-    container_name: assistant-redis
+    container_name: orbitask-redis
 
     ports:
       - "6379:6379"
