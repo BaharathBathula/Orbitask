@@ -9,6 +9,6 @@ router = APIRouter()
 async def health_check() -> dict[str, str]:
     return {
         "status": "healthy",
-        "service": "autonomous-ai-assistant",
+        "service": "orbitask",
         "timestamp": datetime.now(UTC).isoformat(),
     }

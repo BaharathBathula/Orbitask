@@ -24,4 +24,4 @@ def test_health_check() -> None:
     payload = response.json()
 
     assert payload["status"] == "healthy"
-    assert payload["service"] == "autonomous-ai-assistant"
+    assert payload["service"] == "orbitask"
