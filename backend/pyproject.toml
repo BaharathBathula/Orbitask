@@ -1,5 +1,5 @@
 [project]
-name = "autonomous-ai-assistant-backend"
+name = "Orbitask"
 version = "0.1.0"
 description = "Production-grade autonomous AI assistant for email, calendar, and booking workflows."
 requires-python = ">=3.12"
