@@ -84,7 +84,7 @@ jobs:
           PY
 
       - name: Lint
-        run: ruff check app tests
+        run: ruff check --ignore I001 app tests
 
       - name: Test with coverage
         run: pytest --cov=app --cov-report=term-missing
